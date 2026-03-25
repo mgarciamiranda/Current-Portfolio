@@ -290,8 +290,8 @@
     .resume-btn:hover { background: var(--accent); color: var(--navy); }
 
     /* SCROLL ENTRANCE ANIMATIONS */
-    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
-    .fade-up.in-view { opacity: 1; transform: translateY(0); }
+    .js-ready .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .js-ready .fade-up.in-view { opacity: 1; transform: translateY(0); }
 
     /* CONTACT FORM VALIDATION */
     .cf-input.cf-error { border-color: rgba(248,113,113,0.7); }
@@ -573,24 +573,35 @@
     (function() {
       const els = document.querySelectorAll('.fade-up');
       if (!els.length) return;
+
+      // Mark <html> so CSS hides elements only when JS is running
+      document.documentElement.classList.add('js-ready');
+
       const obs = new IntersectionObserver((entries) => {
-        entries.forEach((e, i) => {
+        entries.forEach((e) => {
           if (e.isIntersecting) {
-            const delay = e.target.dataset.delay || 0;
+            const delay = parseInt(e.target.dataset.delay) || 0;
             setTimeout(() => e.target.classList.add('in-view'), delay);
             obs.unobserve(e.target);
           }
         });
-      }, { threshold: 0.12 });
+      }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
 
       // Stagger sibling groups
       document.querySelectorAll('.edu-grid, .cert-grid, .comp-grid, .exp-timeline').forEach(parent => {
         Array.from(parent.querySelectorAll('.fade-up')).forEach((el, i) => {
-          el.dataset.delay = i * 80;
+          el.dataset.delay = i * 75;
         });
       });
 
       els.forEach(el => obs.observe(el));
+
+      // Safety net: after 2s force-show any element still hidden
+      setTimeout(() => {
+        document.querySelectorAll('.js-ready .fade-up:not(.in-view)').forEach(el => {
+          el.classList.add('in-view');
+        });
+      }, 2000);
     })();
 
     // ═══════════════════════════════════════════════════
