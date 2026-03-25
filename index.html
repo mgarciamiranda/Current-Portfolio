@@ -14,6 +14,8 @@
   <meta name="twitter:title" content="Michel Garcia-Miranda | Healthcare Operations Leader"/>
   <meta name="twitter:description" content="Healthcare Operations Leader and Business Analyst — Stanford Medicine, Tampa General Hospital, AdventHealth, Datavant."/>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <!-- Calendly -->
   <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
   <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
@@ -234,6 +236,24 @@
 
     footer { padding: 1.5rem 5vw; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: var(--text-xs); color: var(--gray); text-align: left; }
 
+
+
+    /* HERO CANVAS */
+    #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.55; }
+    #home { position: relative; }
+    #home .hero-grid { position: relative; z-index: 1; }
+
+    /* CARD GLARE */
+    .card-glare { position: absolute; inset: 0; pointer-events: none; z-index: 2; border-radius: inherit; transition: opacity 0.3s; opacity: 0; }
+    .work-card { transform-style: preserve-3d; will-change: transform; }
+    .work-card:hover .card-glare { opacity: 1; }
+
+    /* COUNTER */
+    .hm-number[data-target] { transition: none; }
+
+    @media (max-width: 900px) {
+      #hero-canvas { display: none; }
+    }
 
     /* CERT HIGHLIGHT */
     .cert-highlight { border-color: rgba(0,212,255,0.4) !important; background: rgba(0,212,255,0.04) !important; }
@@ -521,6 +541,7 @@
 
     <!-- 01 HERO -->
     <section class="page-section" id="home">
+      <canvas id="hero-canvas" aria-hidden="true"></canvas>
       <div class="hero-grid">
         <div class="hero-left">
           <h1 class="hero-name"><span class="hero-name-thin">MICHEL</span><br/><span class="hero-name-bold">GARCIA-</span><br/><span class="hero-name-bold">MIRANDA</span></h1>
@@ -532,11 +553,11 @@
           <!-- FIX 1: New value prop tagline replacing the patient-facing one -->
           <p class="hero-value-prop">I build the <strong>operational infrastructure</strong> healthcare systems run on — staffing models, data frameworks, and process systems that turn disorder into <strong>measurable performance</strong>.</p>
           <div class="hero-metrics">
-            <div><div class="hm-number">14</div><div class="hm-label">Years in Healthcare</div></div>
-            <div><div class="hm-number">8</div><div class="hm-label">Years Leadership</div></div>
-            <div><div class="hm-number">$2M</div><div class="hm-label">Budget Managed</div></div>
-            <div><div class="hm-number">100</div><div class="hm-label">Staff Led</div></div>
-            <div><div class="hm-number">4</div><div class="hm-label">Companies</div></div>
+            <div><div class="hm-number" data-target="14" data-prefix="" data-suffix="">0</div><div class="hm-label">Years in Healthcare</div></div>
+            <div><div class="hm-number" data-target="8" data-prefix="" data-suffix="">0</div><div class="hm-label">Years Leadership</div></div>
+            <div><div class="hm-number" data-target="2" data-prefix="$" data-suffix="M">$0M</div><div class="hm-label">Budget Managed</div></div>
+            <div><div class="hm-number" data-target="100" data-prefix="" data-suffix="">0</div><div class="hm-label">Staff Led</div></div>
+            <div><div class="hm-number" data-target="4" data-prefix="" data-suffix="">0</div><div class="hm-label">Companies</div></div>
           </div>
         </div>
       </div>
@@ -765,6 +786,7 @@
       <div class="work-grid">
 
         <div class="work-card" onclick="openModal(0)" role="button" tabindex="0" aria-label="Open case study">
+          <div class="card-glare" aria-hidden="true"></div>
           <div class="work-impact-badge"><div class="wib-num">80%</div><div class="wib-label">Time Saved</div></div>
           <div class="work-tag">Process Automation</div>
           <div class="work-org">Tampa General Hospital</div>
@@ -783,6 +805,7 @@
         </div>
 
         <div class="work-card" onclick="openModal(1)" role="button" tabindex="0" aria-label="Open case study">
+          <div class="card-glare" aria-hidden="true"></div>
           <div class="work-impact-badge"><div class="wib-num">0→1</div><div class="wib-label">Model Built</div></div>
           <div class="work-tag">Data &amp; Analytics</div>
           <div class="work-org">Stanford Medicine</div>
@@ -801,6 +824,7 @@
         </div>
 
         <div class="work-card" onclick="openModal(2)" role="button" tabindex="0" aria-label="Open case study">
+          <div class="card-glare" aria-hidden="true"></div>
           <div class="work-impact-badge"><div class="wib-num">20%</div><div class="wib-label">Efficiency</div></div>
           <div class="work-tag">Workforce Analysis</div>
           <div class="work-org">Tampa General Hospital</div>
@@ -820,6 +844,7 @@
 
         <!-- FIX 3: Strengthened SOP case study card -->
         <div class="work-card" onclick="openModal(3)" role="button" tabindex="0" aria-label="Open case study">
+          <div class="card-glare" aria-hidden="true"></div>
           <div class="work-impact-badge"><div class="wib-num">15%</div><div class="wib-label">Waste Cut</div></div>
           <div class="work-tag">Process Standardization</div>
           <div class="work-org">Tampa General Hospital</div>
@@ -1071,6 +1096,212 @@
         dotEl.style.top = Math.min(trackH, scrollPct * trackH) + 'px';
       });
     }
+
+
+
+    // ═══════════════════════════════════════════════════════════
+    // A — THREE.JS PARTICLE NETWORK
+    // ═══════════════════════════════════════════════════════════
+    (function() {
+      if (window.innerWidth <= 900 || typeof THREE === 'undefined') return;
+
+      const canvas = document.getElementById('hero-canvas');
+      const section = document.getElementById('home');
+      const W = section.offsetWidth, H = section.offsetHeight;
+
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(W, H);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(55, W / H, 0.1, 100);
+      camera.position.z = 14;
+
+      // Particles
+      const COUNT = 90;
+      const posArr = new Float32Array(COUNT * 3);
+      const velArr = [];
+      for (let i = 0; i < COUNT; i++) {
+        posArr[i * 3]     = (Math.random() - 0.5) * 22;
+        posArr[i * 3 + 1] = (Math.random() - 0.5) * 12;
+        posArr[i * 3 + 2] = (Math.random() - 0.5) * 8;
+        velArr.push(
+          (Math.random() - 0.5) * 0.008,
+          (Math.random() - 0.5) * 0.006,
+          (Math.random() - 0.5) * 0.004
+        );
+      }
+
+      const pGeo = new THREE.BufferGeometry();
+      pGeo.setAttribute('position', new THREE.BufferAttribute(posArr, 3));
+      const pMat = new THREE.PointsMaterial({
+        color: 0x00D4FF, size: 0.12, transparent: true, opacity: 0.75,
+        sizeAttenuation: true
+      });
+      scene.add(new THREE.Points(pGeo, pMat));
+
+      // Lines between nearby particles
+      const maxSegs = COUNT * 6;
+      const linePos = new Float32Array(maxSegs * 2 * 3);
+      const lineGeo = new THREE.BufferGeometry();
+      const linePosAttr = new THREE.BufferAttribute(linePos, 3);
+      linePosAttr.setUsage(THREE.DynamicDrawUsage);
+      lineGeo.setAttribute('position', linePosAttr);
+      const lineMat = new THREE.LineBasicMaterial({ color: 0x1E6FE8, transparent: true, opacity: 0.2 });
+      const lineObj = new THREE.LineSegments(lineGeo, lineMat);
+      scene.add(lineObj);
+
+      const THRESHOLD = 5.5;
+      let mouseX = 0, mouseY = 0;
+      let targetRX = 0, targetRY = 0;
+
+      document.addEventListener('mousemove', e => {
+        mouseX = (e.clientX / window.innerWidth  - 0.5);
+        mouseY = (e.clientY / window.innerHeight - 0.5);
+      });
+
+      window.addEventListener('resize', () => {
+        const nW = section.offsetWidth, nH = section.offsetHeight;
+        renderer.setSize(nW, nH);
+        camera.aspect = nW / nH;
+        camera.updateProjectionMatrix();
+      });
+
+      function animate() {
+        requestAnimationFrame(animate);
+
+        // Move particles
+        for (let i = 0; i < COUNT; i++) {
+          posArr[i*3]   += velArr[i*3];
+          posArr[i*3+1] += velArr[i*3+1];
+          posArr[i*3+2] += velArr[i*3+2];
+          if (Math.abs(posArr[i*3])   > 11) velArr[i*3]   *= -1;
+          if (Math.abs(posArr[i*3+1]) >  6) velArr[i*3+1] *= -1;
+          if (Math.abs(posArr[i*3+2]) >  4) velArr[i*3+2] *= -1;
+        }
+        pGeo.attributes.position.needsUpdate = true;
+
+        // Rebuild connection lines
+        let seg = 0;
+        for (let i = 0; i < COUNT && seg < maxSegs; i++) {
+          for (let j = i + 1; j < COUNT && seg < maxSegs; j++) {
+            const dx = posArr[i*3]   - posArr[j*3];
+            const dy = posArr[i*3+1] - posArr[j*3+1];
+            const dz = posArr[i*3+2] - posArr[j*3+2];
+            const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
+            if (dist < THRESHOLD) {
+              const base = seg * 6;
+              linePos[base]   = posArr[i*3];   linePos[base+1] = posArr[i*3+1]; linePos[base+2] = posArr[i*3+2];
+              linePos[base+3] = posArr[j*3];   linePos[base+4] = posArr[j*3+1]; linePos[base+5] = posArr[j*3+2];
+              seg++;
+            }
+          }
+        }
+        lineGeo.setDrawRange(0, seg * 2);
+        lineGeo.attributes.position.needsUpdate = true;
+
+        // Smooth mouse parallax
+        targetRX += (mouseY * 0.35 - targetRX) * 0.05;
+        targetRY += (mouseX * 0.5  - targetRY) * 0.05;
+        scene.rotation.x = targetRX;
+        scene.rotation.y = targetRY;
+
+        renderer.render(scene, camera);
+      }
+      animate();
+    })();
+
+    // ═══════════════════════════════════════════════════════════
+    // B — 3D CARD TILT WITH GLARE
+    // ═══════════════════════════════════════════════════════════
+    (function() {
+      const cards = document.querySelectorAll('.work-card');
+      cards.forEach(card => {
+        const glare = card.querySelector('.card-glare');
+
+        card.addEventListener('mousemove', e => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const cx = rect.width  / 2;
+          const cy = rect.height / 2;
+          const rotX = ((y - cy) / cy) * -7;
+          const rotY = ((x - cx) / cx) *  7;
+
+          card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-6px) scale(1.01)`;
+
+          if (glare) {
+            const angle = Math.atan2(y - cy, x - cx) * 180 / Math.PI;
+            glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 40%, transparent 70%)`;
+          }
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transition = 'transform 0.45s cubic-bezier(.03,.98,.52,.99)';
+          card.style.transform = '';
+          setTimeout(() => card.style.transition = '', 450);
+          if (glare) glare.style.background = '';
+        });
+
+        card.addEventListener('mouseenter', () => {
+          card.style.transition = 'transform 0.12s ease';
+        });
+      });
+    })();
+
+    // ═══════════════════════════════════════════════════════════
+    // C — ANIMATED METRIC COUNTERS
+    // ═══════════════════════════════════════════════════════════
+    (function() {
+      const counters = document.querySelectorAll('.hm-number[data-target]');
+      if (!counters.length) return;
+
+      function easeOutExpo(t) {
+        return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+      }
+
+      function runCounter(el) {
+        const target   = parseFloat(el.dataset.target);
+        const prefix   = el.dataset.prefix  || '';
+        const suffix   = el.dataset.suffix  || '';
+        const duration = 1800;
+        const start    = performance.now();
+
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(12px)';
+        el.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+
+        requestAnimationFrame(() => {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        });
+
+        function tick(now) {
+          const elapsed  = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased    = easeOutExpo(progress);
+          const value    = Math.round(eased * target);
+          el.textContent = prefix + value + suffix;
+          if (progress < 1) requestAnimationFrame(tick);
+          else el.textContent = prefix + target + suffix;
+        }
+        requestAnimationFrame(tick);
+      }
+
+      // Stagger the counters: trigger one by one with delay
+      const metricsEl = document.querySelector('.hero-metrics');
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          obs.unobserve(entry.target);
+          counters.forEach((el, i) => {
+            setTimeout(() => runCounter(el), i * 180);
+          });
+        });
+      }, { threshold: 0.5 });
+
+      if (metricsEl) obs.observe(metricsEl);
+    })();
 
     // Rotating word
     const words = ['Transform', 'Optimize', 'Scale', 'Streamline', 'Elevate'];
