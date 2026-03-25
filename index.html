@@ -94,6 +94,8 @@
     .org-logo-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: var(--text-base); letter-spacing: 0.12em; text-transform: uppercase; color: rgba(240,244,250,0.92); transition: color 0.3s; white-space: nowrap; text-align: center; line-height: 1.3; }
     .org-logo-text span { display: block; font-weight: 400; font-size: var(--text-xs); letter-spacing: 0.18em; color: rgba(240,244,250,0.65); }
     .org-logo-wrap:hover .org-logo-text { color: rgba(240,244,250,0.95); }
+    .org-logo-img { max-height: 36px; max-width: 130px; width: auto; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.75; transition: opacity 0.3s; display: block; }
+    .org-logo-wrap:hover .org-logo-img { opacity: 1; }
     .about-photo-wrap::after { content: ''; position: absolute; inset: 0; background: rgba(30,111,232,0.18); mix-blend-mode: multiply; opacity: 0; transition: opacity 0.4s; pointer-events: none; }
     .about-photo-wrap:hover::after { opacity: 1; }
     #home { display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 6rem; }
@@ -547,10 +549,10 @@
       <div class="logo-ribbon">
         <span class="ribbon-label">Experience At</span>
         <div class="ribbon-logos">
-          <div class="org-logo-wrap"><div class="org-logo-text">Stanford<span>Medicine</span></div></div>
-          <div class="org-logo-wrap"><div class="org-logo-text">Tampa General<span>Hospital</span></div></div>
-          <div class="org-logo-wrap"><div class="org-logo-text">AdventHealth</div></div>
-          <div class="org-logo-wrap"><div class="org-logo-text">Datavant</div></div>
+          <div class="org-logo-wrap"><img class="org-logo-img" src="https://logo.clearbit.com/stanfordhealthcare.org" alt="Stanford Health Care" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/><div class="org-logo-text" style="display:none">Stanford<span>Medicine</span></div></div>
+          <div class="org-logo-wrap"><img class="org-logo-img" src="https://logo.clearbit.com/tgh.org" alt="Tampa General Hospital" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/><div class="org-logo-text" style="display:none">Tampa General<span>Hospital</span></div></div>
+          <div class="org-logo-wrap"><img class="org-logo-img" src="https://logo.clearbit.com/adventhealth.com" alt="AdventHealth" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/><div class="org-logo-text" style="display:none">AdventHealth</div></div>
+          <div class="org-logo-wrap"><img class="org-logo-img" src="https://logo.clearbit.com/datavant.com" alt="Datavant" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/><div class="org-logo-text" style="display:none">Datavant</div></div>
         </div>
       </div>
 
